@@ -4,20 +4,34 @@ const playerFactory = (name, marker) =>{
 };
 
 const gameboard = (() =>{
-     const gameboardContents = [];
-     const winningCombinations = [[0,1,2],
-                                 [3,4,5],
-                                 [6,7,8],
-                                 [0,3,6], 
-                                 [1,4,7],
-                                 [2,5,8],
-                                 [0,4,8],
-                                 [2,4,6]
-                                 ];
-    
+    const gameboardContents = [];
+    let rowsContainer = [[0,0,0],[0,0,0]];
+    let columnContainer = [[0,0,0],[0,0,0]];
+     
 
-
-    return {gameboardContents, winningCombinations};
+    const checkWinner = function(row, column, marker){
+        if (marker === 'X'){
+            rowsContainer[0][row]+=1;
+                if (rowsContainer[0][row]=== 3){
+                    console.log('Player X has won!');
+                }; 
+            columnContainer[0][column]+=1;
+                if (columnContainer[0][column]===3){
+                    console.log('Player X has won!'); 
+                };
+        } else if (marker === 'O'){
+            rowsContainer[1][row]+=1;
+                if (rowsContainer[1][row]=== 3){
+                    console.log('Player O has won!');
+                };
+            columnContainer[1][column]+=1;
+                if (columnContainer[1][column]===3){
+                    console.log('Player O has won!'); 
+                };      
+        }
+        
+    };
+    return {checkWinner, rowsContainer, columnContainer};
 })();
 
 
@@ -33,8 +47,9 @@ const gameFlow = (() =>{
     const clickEvent = function(){
         buttons.forEach(button => button.addEventListener('click', () =>{
         button.textContent = getActivePlayer().marker;
-        let index = button.getAttribute('button-index');
-        gameboard.gameboardContents.push(parseInt(index));
+        let rowIndex = parseInt(button.getAttribute('row-index'));
+        let columnIndex = parseInt(button.getAttribute('column-index'));
+        gameboard.checkWinner(rowIndex,columnIndex, getActivePlayer().marker);
        },{once:true}));
     };
 
@@ -51,12 +66,16 @@ const gameFlow = (() =>{
     const playGame = function(){
         clickEvent();
         handleTurn();
+        gameboard.checkWinner();
+        
     };
 
     return {playGame};
 })();
 
 gameFlow.playGame();
+
+
 
 
 
