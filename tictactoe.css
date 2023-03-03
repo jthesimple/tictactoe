@@ -5,8 +5,14 @@
     justify-content: center;
     justify-items: center;
     align-items: center;
+    margin-top: 50px;;
     
     
+}
+
+h1{
+    text-align: center;
+    margin-top: 150px;
 }
 
 .space{
@@ -15,7 +21,24 @@
     
 }
 
-button{
+.game-button{
     height: 50px;
     width: 50px;
+    background: #ffffff;
+    color: #d161ff;
+}
+
+.restart-container{
+    display: flex;
+    justify-content: center;
+    
+    
+    
+}
+
+.restart{
+    text-align: center;
+    margin-top: 50px;
+    width: 100px;
+    height: 50px;
 }
