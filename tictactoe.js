@@ -22,13 +22,13 @@ const gameboard = (() =>{
             let totalSum = diagonalContainer[0].reduce((accumulator, currentValue) => accumulator + currentValue);
             let oppositeTotalSum = oppositeDiagonalContainer[0].reduce((accumulator,currentValue) => accumulator + currentValue);
                 if (rowsContainer[0][row]=== 3){
-                    console.log('Player X has won!');
+                    alert('Player X has won!');
                 } else if (columnContainer[0][column]===3){
-                    console.log('Player X has won!'); 
+                    alert('Player X has won!'); 
                 } else if (totalSum ===3){
-                    console.log('Player X has won!')
+                    alert('Player X has won!');
                 } else if (oppositeTotalSum ===3){
-                    console.log('Player X has won!')
+                    alert('Player X has won!');
                 };
         } else if (marker === 'O'){
             rowsContainer[1][row]+=1;
@@ -42,17 +42,17 @@ const gameboard = (() =>{
             let totalSum = diagonalContainer[1].reduce((accumulator, currentValue) => accumulator + currentValue);
             let oppositeTotalSum = oppositeDiagonalContainer[1].reduce((accumulator,currentValue) => accumulator + currentValue);
                 if (rowsContainer[1][row]=== 3){
-                    console.log('Player O has won!');
+                    alert('Player O has won!');
                 } else if (columnContainer[1][column]===3){
-                    console.log('Player O has won!'); 
+                    alert('Player O has won!'); 
                 } else if (totalSum ===3){
-                    console.log('Player O has won!')
+                    alert('Player O has won!');
                 } else if (oppositeTotalSum ===3){
-                    console.log('Player O has won!')
+                    alert('Player O has won!');
                 };
         };  
     };
-    return {checkWinner};
+    return {checkWinner, rowsContainer, columnContainer, diagonalContainer, oppositeDiagonalContainer};
 })();
 
 
@@ -83,37 +83,52 @@ const gameFlow = (() =>{
         
     };
 
+    const restart = function(){
+        const restartButton = document.querySelector('.restart');
+        restartButton.addEventListener('click', restartGame)
+    }
+
+    const restartGame = function(){
+        const gameButtons = document.querySelectorAll('.game-button');
+        gameButtons.forEach( button => button.textContent = '');
+
+            for (let i = 0; i < gameboard.rowsContainer.length; i++){
+                for (let j = 0; j < gameboard.rowsContainer[i].length; j++){
+                    gameboard.rowsContainer[i][j] = 0; 
+                };
+            };
+
+            for (let i = 0; i < gameboard.columnContainer.length; i++){
+                for (let j = 0; j < gameboard.columnContainer[i].length; j++){
+                    gameboard.columnContainer[i][j] = 0; 
+                };
+            };
+
+            for (let i = 0; i < gameboard.diagonalContainer.length; i++){
+                for (let j = 0; j < gameboard.diagonalContainer[i].length; j++){
+                    gameboard.diagonalContainer[i][j] = 0; 
+                };
+            };
+
+            for (let i = 0; i < gameboard.oppositeDiagonalContainer.length; i++){
+                for (let j = 0; j < gameboard.oppositeDiagonalContainer[i].length; j++){
+                    gameboard.oppositeDiagonalContainer[i][j] = 0; 
+                };
+            };
+
+            playGame();
+        };
+
+
+
     const playGame = function(){
         clickEvent();
         handleTurn();
         gameboard.checkWinner();
+        restart();
         
     };
-
-    return {playGame};
+    return {playGame, restart, restartGame};
 })();
 
 gameFlow.playGame();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*const displayBoard = (array) =>{
-    const parent = document.querySelector('.gameboard-container');
-        for (let i = 0; i < array.length; i++){
-           parent.children[i].textContent = array[i];
-        };   
-    };*/
